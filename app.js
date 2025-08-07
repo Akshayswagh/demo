@@ -20,9 +20,9 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
 // REQUIRE YOUR ROUTERS
-const listingRouter = require("./routes/listing.js");
-const reviewRouter = require("./routes/review.js");
-const userRouter = require("./routes/user.js");
+// const listingRouter = require("./routes/listing.js");
+// const reviewRouter = require("./routes/review.js");
+// const userRouter = require("./routes/user.js");
 
 const dbUrl = process.env.ATLASDB_URL;
 main()
@@ -95,7 +95,7 @@ app.use("/listings/:id/reviews", reviewRouter);
 // app.use("/user", userRouter);
 
 // 404 Handler
-app.get("*", (req, res, next) => {
+app.use("*", (req, res, next) => {
   next(new ExpressError(404, "Page Not Found!"));
 });
 
