@@ -91,7 +91,7 @@ app.get("/", (req, res) => res.send("hello"));
 
 // KEEP THESE COMMENTED FOR NOW
 // app.use("/listings", listingRouter);
-app.use("/listings/:id/reviews", reviewRouter);
+// app.use("/listings/:id/reviews", reviewRouter);
 // app.use("/user", userRouter);
 
 // 404 Handler
