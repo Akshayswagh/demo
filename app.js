@@ -86,9 +86,9 @@ app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   next();
 });
-// app.use("/listings", listingRouter);
-// app.use("/listings/:id/reviews", reviewRouter);
-app.use("/user", userRouter);
+app.use("/listings", listingRouter);
+app.use("/listings/:id/reviews", reviewRouter);
+// app.use("/user", userRouter);
 
 
 
