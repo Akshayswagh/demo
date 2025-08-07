@@ -2,9 +2,9 @@
 //      START of app.js
 // =============================
 if (process.env.NODE_ENV != "production") {
-  require('dotenv').config();
+  require("dotenv").config();
 }
-  
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -13,7 +13,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
-const MongoStore = require('connect-mongo');
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -30,7 +30,7 @@ main()
     console.log("connected to DB");
   })
   .catch((err) => {
-   console.log(err);
+    console.log(err);
   });
 
 async function main() {
@@ -52,7 +52,8 @@ const store = MongoStore.create({
   touchAfter: 24 * 3600,
 });
 
-store.on("error", (err) => { // Added err parameter
+store.on("error", (err) => {
+  // Added err parameter
   console.log("session store error", err);
 });
 
@@ -61,7 +62,8 @@ const sessionOptions = {
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { // Fixed typo: 'Cookie' to 'cookie'
+  cookie: {
+    // Fixed typo: 'Cookie' to 'cookie'
     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Fixed typo: 'expores' to 'expires' and used new Date()
     maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
@@ -71,14 +73,12 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());
 
-
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
@@ -87,6 +87,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get("/", (req, res) => res.send("hello"));
+
 // KEEP THESE COMMENTED FOR NOW
 // app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
@@ -94,7 +96,7 @@ app.use("/listings/:id/reviews", reviewRouter);
 
 // 404 Handler
 app.all("*", (req, res, next) => {
-  next(new ExpressError(404,"Page Not Found!"));
+  next(new ExpressError(404, "Page Not Found!"));
 });
 
 // Error Handler
@@ -105,7 +107,7 @@ app.use((err, req, res, next) => {
 
 app.listen(3000, () => {
   console.log("server is listening to port 3000");
-}); 
+});
 // =============================
 //      END of app.js
 // =============================
