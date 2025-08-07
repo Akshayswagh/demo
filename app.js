@@ -44,48 +44,48 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
-const store = MongoStore.create({
-  mongoUrl: dbUrl,
-  crypto: {
-    secret: process.env.SECRET,
-  },
-  touchAfter: 24 * 3600,
-});
+// const store = MongoStore.create({
+//   mongoUrl: dbUrl,
+//   crypto: {
+//     secret: process.env.SECRET,
+//   },
+//   touchAfter: 24 * 3600,
+// });
 
-store.on("error", (err) => {
-  // Added err parameter
-  console.log("session store error", err);
-});
+// store.on("error", (err) => {
+//   // Added err parameter
+//   console.log("session store error", err);
+// });
 
-const sessionOptions = {
-  store,
-  secret: process.env.SECRET,
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    // Fixed typo: 'Cookie' to 'cookie'
-    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Fixed typo: 'expores' to 'expires' and used new Date()
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
-  },
-};
+// const sessionOptions = {
+//   store,
+//   secret: process.env.SECRET,
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: {
+//     // Fixed typo: 'Cookie' to 'cookie'
+//     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Fixed typo: 'expores' to 'expires' and used new Date()
+//     maxAge: 7 * 24 * 60 * 60 * 1000,
+//     httpOnly: true,
+//   },
+// };
 
-app.use(session(sessionOptions));
-app.use(flash());
+// app.use(session(sessionOptions));
+// app.use(flash());
 
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
+// app.use(passport.initialize());
+// app.use(passport.session());
+// passport.use(new LocalStrategy(User.authenticate()));
 
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
 
-app.use((req, res, next) => {
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
-  res.locals.currentUser = req.user;
-  next();
-});
+// app.use((req, res, next) => {
+//   res.locals.success = req.flash("success");
+//   res.locals.error = req.flash("error");
+//   res.locals.currentUser = req.user;
+//   next();
+// });
 
 app.get("/", (req, res) => res.send("hello"));
 
@@ -95,15 +95,15 @@ app.get("/", (req, res) => res.send("hello"));
 // app.use("/user", userRouter);
 
 // 404 Handler
-app.use("*", (req, res, next) => {
-  next(new ExpressError(404, "Page Not Found!"));
-});
+// app.use("*", (req, res, next) => {
+//   next(new ExpressError(404, "Page Not Found!"));
+// });
 
 // Error Handler
-app.use((err, req, res, next) => {
-  let { statusCode = 500, message = "Something went wrong" } = err;
-  res.status(statusCode).render("error.ejs", { message });
-});
+// app.use((err, req, res, next) => {
+//   let { statusCode = 500, message = "Something went wrong" } = err;
+//   res.status(statusCode).render("error.ejs", { message });
+// });
 
 app.listen(3000, () => {
   console.log("server is listening to port 3000");
