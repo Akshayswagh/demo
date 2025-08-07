@@ -71,6 +71,7 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());
 
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -78,13 +79,16 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.currentUser = req.user;
   next();
 });
-
+app.use("/listings", listingRouter);
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/user", userRouter);
 // app.get("/demouser", async (req, res) => {
 //   let fakeUser = new User({
 //     email: "student@gmail.com",
@@ -95,9 +99,7 @@ app.use((req, res, next) => {
 //   res.send(registeredUser);
 // });
 
-app.use("/listings", listingRouter);
-app.use("/listings/:id/reviews", reviewRouter);
-app.use("/", userRouter);
+
 
 // 404
 app.all("*", (req, res, next) => {
