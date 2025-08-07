@@ -20,9 +20,9 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
 // REQUIRE YOUR ROUTERS
-// const listingRouter = require("./routes/listing.js");
-// const reviewRouter = require("./routes/review.js");
-// const userRouter = require("./routes/user.js");
+const listingRouter = require("./routes/listing.js");
+const reviewRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
 
 const dbUrl = process.env.ATLASDB_URL;
 main()
@@ -90,9 +90,9 @@ passport.deserializeUser(User.deserializeUser());
 app.get("/", (req, res) => res.send("hello"));
 
 // KEEP THESE COMMENTED FOR NOW
-// app.use("/listings", listingRouter);
-// app.use("/listings/:id/reviews", reviewRouter);
-// app.use("/user", userRouter);
+app.use("/listings", listingRouter);
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/user", userRouter);
 
 // 404 Handler
 // app.use("*", (req, res, next) => {
